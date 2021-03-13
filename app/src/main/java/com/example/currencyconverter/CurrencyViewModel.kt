@@ -28,30 +28,51 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
 
 
     fun getCurrency(date: String) {
-        Log.d(TAG, "calculateCurrency: starts with $date")
+        Log.d(TAG, "getCurrency: starts with $date")
 
         viewModelScope.launch {
             val result =  withContext(Dispatchers.IO) {currencyClient.requestResponse(date)}
             val status = currencyClient.getDownloadStatus()
-            Log.d(TAG, "calculateCurrency:  response result is $result, and status $status")
+            Log.d(TAG, "getCurrency:  response result is $result, and status $status")
             if(status == DownloadStatus.OK) {
                 val arrayResults = convertJsonResponse(result)
                 _currentCurrenciesMLD.value = arrayResults
             }
             else {
                 // download failed
-                Log.d(TAG, "runAzureML failed with status $status. Error message is: $result")
+                Log.d(TAG, "getCurrency failed with status $status. Error message is: $result")
             }
         }
 
-        Log.d(TAG, "calculateCurrency: ends")
+        Log.d(TAG, "getCurrency: ends")
 
     }
 
 
     fun calculateCurrency(convertFrom: String, convertTo: String, value:Double) {
-        
+        var currencyFrom: Currency? = null
+        var currencyTo: Currency? = null
+        if(convertFrom == convertTo) {
+            _currentResultMLD.value = value
 
+        }
+        else {
+            for(currency in _currentCurrenciesMLD.value!!)  {
+                if(currency.currencyCode == convertFrom) {
+                    currencyFrom = currency
+                }
+                else if (currency.currencyCode == convertTo) {
+                    currencyTo = currency
+                }
+            }
+
+            //calculation
+            //HNB in Croatia doesn't allow directly converting from euro to usd for example you need to convert it to HRK first
+            val nationalValue = value * currencyFrom?.unitValue!! * currencyFrom.buyingRate!! // bank buying convertFrom value from you that is why buyingRate
+            val result = nationalValue / currencyTo?.unitValue!! / currencyTo.sellingRate!! // bank selling convertTO value from you that is why sellingRate
+            _currentResultMLD.value = result
+
+        }
     }
 
 

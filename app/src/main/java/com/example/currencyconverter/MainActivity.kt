@@ -52,11 +52,16 @@ class MainActivity : AppCompatActivity() {
 //        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 //        val formattedDate = OffsetDateTime.parse(dateNow, formatter)
         Log.d(TAG, "onCreate: formatted date is $dateFormatted")
-        currencyViewModel.getCurrency(dateFormatted)
+        currencyViewModel.getCurrency(dateFormatted) // you could also put this init of ViewModel
 
 
         btnCalculate.setOnClickListener {
-            currencyViewModel.calculateCurrency(spinnerConvertFrom.selectedItem.toString(), spinnerConvertTo.selectedItem.toString(), etValueFrom.text.toString().toDouble())
+            if(etValueFrom.text?.isEmpty()!!) {
+                etValueFrom.error = getString(R.string.error_number_needed)
+            }
+            else {
+                currencyViewModel.calculateCurrency(spinnerConvertFrom.selectedItem.toString(), spinnerConvertTo.selectedItem.toString(), etValueFrom.text.toString().toDouble())
+            }
         }
 
         Log.d(TAG, "onCreate: ends")
@@ -64,6 +69,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setSpinners(fillArray: ArrayList<Currency>) {
+        Log.d(TAG, "setSpinners: starts $fillArray")
         val adapterConvertFrom: ArrayAdapter<*>?
         val adapterConvertTo: ArrayAdapter<*>?
 
@@ -81,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         adapterConvertTo = ArrayAdapter(this, R.layout.spinner_item, codeList)
         adapterConvertTo.setDropDownViewResource(R.layout.spinner_dropdown_item)
         spinnerConvertTo.adapter = adapterConvertTo
+        Log.d(TAG, "setSpinners: ends with  $fillArray")
     }
 
 

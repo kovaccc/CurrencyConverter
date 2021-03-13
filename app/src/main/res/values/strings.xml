@@ -17,6 +17,8 @@
     <string name="btn_calculate"> Calculate </string>
     <string name="text_result"> Result </string>
 
+    <string name="error_number_needed"> Input number </string>
+
     <string name="spinner_arrow_currency_content_description">Spinner Arrow for currency picking</string>
 
 

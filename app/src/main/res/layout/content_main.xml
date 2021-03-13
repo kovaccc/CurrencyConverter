@@ -27,16 +27,25 @@
             android:orientation="horizontal">
 
 
-            <EditText
-                android:id="@+id/etValueFrom"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiet_add_quantity"
+                android:layout_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:inputType="numberDecimal"
-                android:layout_weight="2"
-                android:hint="@string/hint_number_from"
-                android:padding="@dimen/padding_small">
+                app:hintEnabled="false"
+                app:errorEnabled="true">
 
-            </EditText>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etValueFrom"
+                    android:hint="@string/hint_number_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="numberDecimal"
+                    android:padding="@dimen/padding_small">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
