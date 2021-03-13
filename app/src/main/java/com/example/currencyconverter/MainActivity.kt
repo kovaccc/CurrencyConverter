@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import kotlinx.android.synthetic.main.content_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 import com.example.currencyconverter.model.Currency
 
 
 private const val TAG = "MainActivity"
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         currencyViewModel.currentResultLD.observe(this, { result ->
             Log.d(TAG, "onCreate: observing user with $result")
-            tvResult.text = getString(R.string.result_text, result.toString(), spinnerConvertFrom.selectedItem.toString())
+            tvResult.text = getString(R.string.result_text, result.toString(), spinnerConvertTo.selectedItem.toString())
         })
 
         currencyViewModel.currentCurrenciesLD.observe(this, { result ->
@@ -39,14 +39,18 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        currencyViewModel.toast.observe(this, { message ->
+            message?.let {
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+                currencyViewModel.onToastShown()
+            }
+        })
+
+
+
         // so you can also click on arrow to open spinner
         ivSpinnerArrowConvertFrom.setOnClickListener { spinnerConvertFrom.performClick() }
         ivSpinnerArrowConvertTo.setOnClickListener { spinnerConvertTo.performClick() }
-
-
-        val dateFormatted = getCurrentFormattedDate()
-        Log.d(TAG, "onCreate: formatted date is $dateFormatted")
-        currencyViewModel.getCurrency(dateFormatted)
 
         btnCalculate.setOnClickListener {
             if(etValueFrom.text?.isEmpty()!! || etValueFrom.text?.length!! > 14) {
@@ -61,13 +65,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun getCurrentFormattedDate () : String {
-        //SimpleDateFormat is deprecated
-        val dateNow =  GregorianCalendar(Locale.getDefault()).time
-        Log.d(TAG, "onCreate: dateNow is $dateNow")
-        val dateFormatted = SimpleDateFormat("yyyy-MM-dd").format(dateNow) // it is deprecated but DateTimeFormatter also has warning
-        return dateFormatted
-    }
+
 
     private fun setSpinners(fillArray: ArrayList<Currency>) {
         Log.d(TAG, "setSpinners: starts $fillArray")
