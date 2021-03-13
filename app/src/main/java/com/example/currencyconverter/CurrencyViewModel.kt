@@ -68,8 +68,8 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
 
             //calculation
             //HNB in Croatia doesn't allow directly converting from euro to usd for example you need to convert it to HRK first
-            val nationalValue = value * currencyFrom?.unitValue!! * currencyFrom.buyingRate!! // bank buying convertFrom value from you that is why buyingRate
-            val result = nationalValue / currencyTo?.unitValue!! / currencyTo.sellingRate!! // bank selling convertTO value from you that is why sellingRate
+            val nationalValue = value * (currencyFrom?.buyingRate!! / currencyFrom.unitValue!!) // bank buying convertFrom value from you that is why buyingRate, dividing with unitValue to find value for 1
+            val result = nationalValue / (currencyTo?.sellingRate!! / currencyTo.unitValue!!) // bank selling convertTO value from you that is why sellingRate
             _currentResultMLD.value = result
 
         }

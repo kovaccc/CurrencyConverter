@@ -1,7 +1,6 @@
 package com.example.currencyconverter.module
 
 
-import android.app.Application
 import com.example.currencyconverter.APIService
 import com.example.currencyconverter.CurrencyClient
 import com.example.currencyconverter.CurrencyViewModel

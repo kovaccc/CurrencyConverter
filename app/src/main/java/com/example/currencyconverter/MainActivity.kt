@@ -56,8 +56,8 @@ class MainActivity : AppCompatActivity() {
 
 
         btnCalculate.setOnClickListener {
-            if(etValueFrom.text?.isEmpty()!!) {
-                etValueFrom.error = getString(R.string.error_number_needed)
+            if(etValueFrom.text?.isEmpty()!! || etValueFrom.text?.length!! > 14) { // if number is bigger than double type can store
+                etValueFrom.error = getString(R.string.error_valid_number)
             }
             else {
                 currencyViewModel.calculateCurrency(spinnerConvertFrom.selectedItem.toString(), spinnerConvertTo.selectedItem.toString(), etValueFrom.text.toString().toDouble())
