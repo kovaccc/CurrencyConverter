@@ -9,12 +9,12 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
 
-    viewModel { CurrencyViewModel(get())}
+    viewModel {CurrencyViewModel(get())} //viewModel
 
 }
 
 val clientModule = module {
-    single {CurrencyClient(get())} // singleton
+    factory {CurrencyClient(get())} // factory, we don't want CurrencyClient retains DownloadStatus
 }
 
 val serviceModule = module {

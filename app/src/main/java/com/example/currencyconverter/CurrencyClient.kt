@@ -3,9 +3,6 @@ package com.example.currencyconverter
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
-import retrofit2.Retrofit
 import java.io.IOException
 import java.net.MalformedURLException
 
@@ -15,7 +12,6 @@ private const val TAG = "CurrencyClient"
 enum class DownloadStatus {
     OK, IDLE, NOT_INITIALISED, FAILED_OR_EMPTY, PERMISSIONS_ERROR, ERROR
 }
-
 
 class CurrencyClient(private val currencyService: APIService) {
 

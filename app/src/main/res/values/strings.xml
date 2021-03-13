@@ -8,6 +8,7 @@
     <string name="error_valid_number"> Input valid number </string>
 
     <string name="spinner_arrow_currency_content_description">Spinner Arrow for currency picking</string>
+    <string name="result_text">%s %s</string>
 
     <string name="choose_convert_from_value_prompt">Choose convert from value</string>
     <string name="choose_convert_to_value_prompt">Choose convert to value</string>

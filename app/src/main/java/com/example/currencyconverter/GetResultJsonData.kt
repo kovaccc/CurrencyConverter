@@ -9,7 +9,7 @@ import org.json.JSONException
 
 
 private const val TAG = "GetResultJsonData"
-class GetResultJsonData { // use this class for parsing JSON response since response has String values I won't use GsonConverter
+class GetResultJsonData {
 
     suspend fun parseJsonData(data : String) : ArrayList<Currency> {
         Log.d(TAG, "parseJsonData starts with $data")

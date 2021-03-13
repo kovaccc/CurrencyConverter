@@ -35,8 +35,8 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
             val status = currencyClient.getDownloadStatus()
             Log.d(TAG, "getCurrency:  response result is $result, and status $status")
             if(status == DownloadStatus.OK) {
-                val arrayResults = convertJsonResponse(result)
-                _currentCurrenciesMLD.value = arrayResults
+                val arrayCurrency = convertJsonResponse(result)
+                _currentCurrenciesMLD.value = arrayCurrency
             }
             else {
                 // download failed
@@ -50,12 +50,13 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
 
 
     fun calculateCurrency(convertFrom: String, convertTo: String, value:Double) {
+        Log.d(TAG, "calculateCurrency: starts with $convertFrom, $convertTo, $value")
         var currencyFrom: Currency? = null
         var currencyTo: Currency? = null
         if(convertFrom == convertTo) {
             _currentResultMLD.value = value
-
         }
+
         else {
             for(currency in _currentCurrenciesMLD.value!!)  {
                 if(currency.currencyCode == convertFrom) {
@@ -67,12 +68,14 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
             }
 
             //calculation
-            //HNB in Croatia doesn't allow directly converting from euro to usd for example you need to convert it to HRK first
+            //HNB in Croatia doesn't allow directly converting from euro to usd for example, you need to convert it to HRK first
             val nationalValue = value * (currencyFrom?.buyingRate!! / currencyFrom.unitValue!!) // bank buying convertFrom value from you that is why buyingRate, dividing with unitValue to find value for 1
-            val result = nationalValue / (currencyTo?.sellingRate!! / currencyTo.unitValue!!) // bank selling convertTO value from you that is why sellingRate
+            val result = nationalValue / (currencyTo?.sellingRate!! / currencyTo.unitValue!!) // bank selling convertTo value to you that is why sellingRate
             _currentResultMLD.value = result
 
         }
+
+        Log.d(TAG, "calculateCurrency: ends")
     }
 
 

@@ -20,32 +20,33 @@
 
 
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tiet_add_quantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:hintEnabled="false"
+            app:errorEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etValueFrom"
+                android:hint="@string/hint_number_from"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:padding="@dimen/padding_small">
+
+            </com.google.android.material.textfield.TextInputEditText>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_large"
             android:orientation="horizontal">
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiet_add_quantity"
-                android:layout_weight="2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                app:hintEnabled="false"
-                app:errorEnabled="true">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etValueFrom"
-                    android:hint="@string/hint_number_from"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:inputType="numberDecimal"
-                    android:padding="@dimen/padding_small">
-
-                </com.google.android.material.textfield.TextInputEditText>
-
-            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
