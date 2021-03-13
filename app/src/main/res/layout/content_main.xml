@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin_medium"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_large"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/etValueFrom"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:inputType="numberDecimal"
+                android:layout_weight="2"
+                android:hint="@string/hint_number_from"
+                android:padding="@dimen/padding_small">
+
+            </EditText>
+
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_weight="2"
+
+                android:background="@color/purple_200"
+
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerConvertFrom"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="5"
+                    android:gravity="center"
+
+                    android:background="@android:color/transparent"
+                    android:prompt="@string/choose_convert_from_value_prompt"
+                    android:entries="@array/currency_arrays"
+
+                    android:spinnerMode="dropdown"
+                    android:textSize="@dimen/textsize_xlarge" />
+
+                <ImageView
+                    android:id="@+id/ivSpinnerArrowConvertFrom"
+                    android:layout_width="wrap_content"
+                    android:contentDescription="@string/spinner_arrow_currency_content_description"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_arrow_drop_down_24" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvConvertTo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/text_convert_to"
+                android:textSize="@dimen/textsize_xlarge"
+                android:typeface="sans">
+
+            </TextView>
+
+
+            <LinearLayout
+
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginEnd="@dimen/margin_small"
+                android:layout_weight="2"
+
+                android:background="@color/purple_200"
+
+                android:orientation="horizontal">
+
+                <Spinner
+                    android:id="@+id/spinnerConvertTo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="5"
+                    android:gravity="center"
+
+                    android:background="@android:color/transparent"
+                    android:entries="@array/currency_arrays"
+                    android:prompt="@string/choose_convert_to_value_prompt"
+
+                    android:spinnerMode="dropdown"
+                    android:textSize="@dimen/textsize_xlarge" />
+
+                <ImageView
+                    android:id="@+id/ivSpinnerArrowConvertTo"
+                    android:layout_width="wrap_content"
+                    android:contentDescription="@string/spinner_arrow_currency_content_description"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_arrow_drop_down_24" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/btnCalculate"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="@dimen/margin_large"
+            android:text="@string/btn_calculate"
+            android:textSize="@dimen/textsize_xlarge"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent">
+
+        </Button>
+
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_result"
+            android:textSize="@dimen/textsize_xlarge"
+            android:typeface="sans">
+
+        </TextView>
+
+
+
+    </LinearLayout>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
