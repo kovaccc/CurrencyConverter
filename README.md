@@ -8,11 +8,12 @@ Android project that has it's own API that allows communication of the applicati
 **Android version 30.0.2**
 ## Features
 The android app lets you: 
-
+ - Get currencies from REST API 
  - Select the currency from which you want to convert
  - Select the currency you want to convert
  - Enter the value you want to convert
- - Seek processing and get the result from REST API 
+ - Get conversion result
+ 
 
 ## Screenshots
 ![image](https://user-images.githubusercontent.com/75457058/111833081-eaa35280-88f1-11eb-942a-b169d79390a6.png)
