@@ -8,13 +8,16 @@
     <string name="error_valid_number"> Input valid number </string>
 
     <string name="spinner_arrow_currency_content_description">Spinner Arrow for currency picking</string>
-    <string name="result_text">%s %s</string>
+    <string name="result_text">%s %s = %s %s</string>
 
     <string name="choose_convert_from_value_prompt">Choose convert from value</string>
     <string name="choose_convert_to_value_prompt">Choose convert to value</string>
     <string-array name="currency_arrays">
         <item>AUD</item>
-        <item>EUR</item>
     </string-array>
+
+
+    <string name="snackbar_try_again">Try again</string>
+    <string name="snackbar_error_message">Something went wrong, check your connection and try again.</string>
 
 </resources>

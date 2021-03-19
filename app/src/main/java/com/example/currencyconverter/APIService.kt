@@ -11,7 +11,7 @@ interface APIService {
     suspend fun getCurrency(@Query("date") date: String): Response<ResponseBody>
 
 
-    companion object {
+    companion object { // companion objects are singleton, you can access them without creating instance of a class
         fun create() : APIService {
             // Create Retrofit
             val retrofit = Retrofit.Builder()

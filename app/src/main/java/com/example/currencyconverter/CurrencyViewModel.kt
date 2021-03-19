@@ -29,21 +29,17 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
         get() = _currentCurrenciesMLD
 
 
-    private val _toast = MutableLiveData<String?>()
-    val toast: LiveData<String?>
-        get() = _toast
-
+    private val _currentSnackBarMLD = MutableLiveData<Boolean>()
+    val currentSnackBarLD: LiveData<Boolean>
+        get() = _currentSnackBarMLD
 
 
     init {
-
         val dateFormatted = getCurrentFormattedDate()
-        Log.d(TAG, "formatted date is $dateFormatted")
         getCurrency(dateFormatted)
-
     }
 
-    private fun getCurrency(date: String) {
+    fun getCurrency(date: String) {
         Log.d(TAG, "getCurrency: starts with $date")
 
         viewModelScope.launch {
@@ -56,6 +52,7 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
             }
             else {
                 // download failed
+                _currentSnackBarMLD.value = true
                 Log.d(TAG, "getCurrency failed with status $status. Error message is: $result")
             }
         }
@@ -64,50 +61,50 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
 
     }
 
-    private fun getCurrentFormattedDate () : String {
+    fun resetSnackBarState() {
+        _currentSnackBarMLD.value = false
+    }
+
+    fun getCurrentFormattedDate () : String {
         //SimpleDateFormat is deprecated
         val dateNow =  GregorianCalendar(Locale.getDefault()).time
-        Log.d(TAG, "onCreate: dateNow is $dateNow")
+        Log.d(TAG, "getCurrentFormattedDate: dateNow is $dateNow")
         val dateFormatted = SimpleDateFormat("yyyy-MM-dd").format(dateNow) // it is deprecated but DateTimeFormatter also has warning
+        Log.d(TAG, "getCurrentFormattedDate: formatted date  is $dateFormatted")
         return dateFormatted
     }
 
     fun calculateCurrency(convertFrom: String, convertTo: String, value:Double) {
         Log.d(TAG, "calculateCurrency: starts with $convertFrom, $convertTo, $value")
-        var currencyFrom: Currency? = null
-        var currencyTo: Currency? = null
+
         if(convertFrom == convertTo) {
             _currentResultMLD.value = value
         }
 
         else {
-            if(_currentCurrenciesMLD.value != null) {
 
+            val currencyFrom = getCurrencyObject(convertFrom)
+            val currencyTo = getCurrencyObject(convertTo)
 
-                for(currency in _currentCurrenciesMLD.value!!)  {
-                    if(currency.currencyCode == convertFrom) {
-                        currencyFrom = currency
-                    }
-                    else if (currency.currencyCode == convertTo) {
-                        currencyTo = currency
-                    }
-                }
+            //calculation
+            //HNB in Croatia doesn't allow directly converting from euro to usd for example, you need to convert it to HRK first
+            val nationalValue = value * (currencyFrom?.buyingRate!! / currencyFrom.unitValue!!) // bank buying convertFrom value from you that is why buyingRate, dividing with unitValue to find value for 1
+            val result = nationalValue / (currencyTo?.sellingRate!! / currencyTo.unitValue!!) // bank selling convertTo value to you that is why sellingRate
+            _currentResultMLD.value = result
 
-                //calculation
-                //HNB in Croatia doesn't allow directly converting from euro to usd for example, you need to convert it to HRK first
-                val nationalValue = value * (currencyFrom?.buyingRate!! / currencyFrom.unitValue!!) // bank buying convertFrom value from you that is why buyingRate, dividing with unitValue to find value for 1
-                val result = nationalValue / (currencyTo?.sellingRate!! / currencyTo.unitValue!!) // bank selling convertTo value to you that is why sellingRate
-                _currentResultMLD.value = result
-            }
-
-            else {
-                _toast.value = "Connect to network"
-            }
         }
 
         Log.d(TAG, "calculateCurrency: ends")
     }
 
+    private fun getCurrencyObject(currencyCode: String): Currency? {
+        for (currency in _currentCurrenciesMLD.value!!) {
+            if (currency.currencyCode == currencyCode) {
+                return currency
+            }
+        }
+        return null
+    }
 
     private suspend fun convertJsonResponse(result: String) : ArrayList<Currency>{
         Log.d(TAG, "convertJsonResponse: starts with $result")
@@ -120,11 +117,6 @@ class CurrencyViewModel(private val currencyClient: CurrencyClient) : ViewModel(
     override fun onCleared() {
         Log.d(TAG, "onCleared: starts")
         super.onCleared()
-    }
-
-    fun onToastShown()
-    {
-        _toast.value = null
     }
 
 }

@@ -27,7 +27,7 @@ class CurrencyClient(private val currencyService: APIService) {
             val response =
                 currencyService.getCurrency(date)
 
-            val responseString =  withContext(Dispatchers.IO) {
+            val responseString =  withContext(Dispatchers.IO) { // because .string() method loads entire response to memory and can produce outOfMemory if it is to large, that is why IO
                 response.body()?.string()
             }
             Log.d(TAG, "requestResponse: ends with $responseString")
