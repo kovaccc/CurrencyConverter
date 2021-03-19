@@ -24,12 +24,12 @@ The android app lets you:
 
 CurrencyConverter requires the following permissions in AndroidManifest.xml: 
 
--  Internet permission are used for getting response from Azure web service
+-  Internet permission is used for getting response from web service
 
 ## Setup
 1. Clone the repository
 ```
-git clone https://github.com/kovaccc/HeartHelper.git
+https://github.com/kovaccc/CurrencyConverter.git
 ```
 2. Open the project with your IDE/Code Editor
 3. Run it on simulator or real Android device 
